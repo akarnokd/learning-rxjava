@@ -44,4 +44,8 @@ public class ObservableCreateJustExample implements Program {
 				.subscribe(System.out::println);
 	}
 
+	// FIXME missing main method
+	public static void main(String[] args) {
+        new ObservableCreateJustExample().run();
+    }
 }

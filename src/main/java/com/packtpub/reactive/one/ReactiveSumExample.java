@@ -85,10 +85,16 @@ public class ReactiveSumExample implements Program {
 		Observable<Double> b = varStream("b", input);
 
 		new ReactiveSum(a, b);
+
+        // FIXME main thread has to wait for exit too
+		input.filter(s -> "exit".equals(s)).toBlocking().lastOrDefault("");
 	}
 
 	@Override
 	public int chapter() {
 		return 1;
 	}
+	public static void main(String[] args) {
+        new ReactiveSumExample().run();
+    }
 }

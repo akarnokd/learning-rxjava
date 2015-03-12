@@ -137,4 +137,10 @@ public class HttpRequestsExample implements Program {
 		return Observable.amb(fromCache(url), response);
 	}
 
+	/*
+	 * FIXME: Error from Star Gazers: java.io.IOException: Stream closed
+	 */
+	public static void main(String[] args) {
+        new HttpRequestsExample().run();
+    }
 }

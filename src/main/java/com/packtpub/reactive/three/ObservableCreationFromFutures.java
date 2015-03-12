@@ -12,6 +12,9 @@ import rx.schedulers.Schedulers;
 
 import com.packtpub.reactive.common.Program;
 
+/*
+ * FIXME If we target Java 8, it is worth creating an example to interact with CompletableFuture.
+ */
 public class ObservableCreationFromFutures implements Program {
 
 	@Override
@@ -29,6 +32,10 @@ public class ObservableCreationFromFutures implements Program {
 		ByteBuffer buffer = ByteBuffer.allocate(512);
 		Path path = Paths.get("src", "main", "resources", "lorem.txt");
 
+		/*
+		 * FIXME Warning! The try may close the async channel at any time and even prevent 
+		 * the observable from receiving any value.
+		 */
 		try (AsynchronousFileChannel asyncChannel = AsynchronousFileChannel
 				.open(path)) {
 
@@ -47,6 +54,9 @@ public class ObservableCreationFromFutures implements Program {
 		} catch (IOException e) {
 		}
 
+		/*
+		 * FIXME, consider using CountDownLatch instead of a timed wait.
+		 */
 		try {
 			System.out.println("Waiting for the thread to end...");
 			System.out.println("--------------------------------");
@@ -55,5 +65,8 @@ public class ObservableCreationFromFutures implements Program {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public static void main(String[] args) {
+        new ObservableCreationFromFutures().run();
+    }
 }

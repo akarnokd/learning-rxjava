@@ -83,7 +83,7 @@ public class SubjectsExample implements Program {
 		try {
 			Thread.sleep(300L);
 
-			publishSubject.onNext(555L);
+			publishSubject.onNext(555L); // Violates the serialized access requirement: the timer and the main thread may onNext the same time
 			sub3 = subscribePrint(publishSubject, "Third");
 			Thread.sleep(500L);
 		} catch (InterruptedException e) {
@@ -116,4 +116,8 @@ public class SubjectsExample implements Program {
 		sum.setB(4);
 	}
 
+	public static void main(String[] args) {
+        new SubjectsExample().run();
+    }
+	
 }

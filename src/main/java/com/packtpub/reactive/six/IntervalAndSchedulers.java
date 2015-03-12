@@ -42,6 +42,10 @@ public class IntervalAndSchedulers implements Program {
 			.doOnCompleted(free)
 			.subscribe();
 		
+		/*
+		 * FIXME I suggest using CountDownLatch instead. Monitor wait may wake up spuriously before
+		 * the time elapses.
+		 */
 		synchronized (monitor) {
 			try {
 				monitor.wait(5000L);

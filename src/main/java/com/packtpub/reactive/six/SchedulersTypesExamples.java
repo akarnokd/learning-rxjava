@@ -67,6 +67,9 @@ public class SchedulersTypesExamples implements Program {
 				if (onTheSameWorker) {
 					worker.schedule(addWork);
 				} else {
+				    /*
+				     * FIXME this is dangerous as it causes Scheduler.Worker (memory) leak.
+				     */
 					scheduler.createWorker().schedule(addWork);
 				}
 				System.out.println("End add!");
@@ -78,6 +81,9 @@ public class SchedulersTypesExamples implements Program {
 				if (onTheSameWorker) {
 					worker.schedule(removeWork);
 				} else {
+                    /*
+                     * FIXME this is dangerous as it causes Scheduler.Worker (memory) leak.
+                     */
 					scheduler.createWorker().schedule(removeWork);
 				}
 				
@@ -87,6 +93,11 @@ public class SchedulersTypesExamples implements Program {
 		};
 		
 		worker.schedule(work);
+		
+        /*
+         * FIXME worker is not unsubscribed anywhere and causes Scheduler.Worker (memory) leak
+         */
+
 	}
 
 	@Override

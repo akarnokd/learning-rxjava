@@ -92,7 +92,10 @@ public class CreateObservable {
 					}
 				}
 			}
-		}).publish();
+		})
+		// FIXME one has to observe the System.io on a different thread because its synchronous nature may block other subscribers.
+		.subscribeOn(Schedulers.io())
+		.publish();
 	}
 
 	public static Observable<Path> listFolder(Path dir, String glob) {

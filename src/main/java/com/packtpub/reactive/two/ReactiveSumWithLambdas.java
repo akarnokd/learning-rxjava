@@ -16,10 +16,17 @@ public class ReactiveSumWithLambdas implements Program {
 
 		return input
 				.map(str -> pattern.matcher(str))
-				.filter(matcher -> matcher.matches()
-						&& matcher.group(1) != null)
+				.filter(matcher -> {
+                    boolean m = matcher.matches();
+                    if (m) {
+                        String g = matcher.group(1);
+                        return g != null;
+                    }
+                    return false;
+                })
 				.map(matcher -> matcher.group(1))
-				.map(str -> Double.parseDouble(str));
+				.map(str -> Double.parseDouble(str))
+				.doOnNext(System.out::println);
 	}
 
 	public static void reactiveSum(Observable<Double> a, Observable<Double> b) {
@@ -43,6 +50,8 @@ public class ReactiveSumWithLambdas implements Program {
 
 		reactiveSum(a, b);
 
+		// FIXME main thread has to wait for exit too
+		input.filter(s -> "exit".equals(s)).toBlocking().lastOrDefault("");
 	}
 
 	public static void main(String[] args) {

@@ -48,6 +48,12 @@ public class ObservableCreationFromExamples implements Program {
 		DirectoryStream<Path> dStream;
 		try {
 			dStream = Files.newDirectoryStream(resources);
+			/*
+			 * FIXME Warning! DirectoryStream is a single-use only, meaning that it doesn't support
+			 * concurrent streaming and can't be repeated because further iterations yield empty results.
+			 * In addition, the contract on DirectoryStream requires it to be closed after use which
+			 * Observable.from() can't do.
+			 */
 			Observable<Path> dirObservable = Observable.from(dStream);
 			dirObservable.subscribe(System.out::println);
 		} catch (IOException e) {

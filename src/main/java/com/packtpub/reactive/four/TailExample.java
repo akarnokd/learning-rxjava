@@ -21,6 +21,9 @@ public class TailExample implements Program {
 		return 4;
 	}
 
+	/*
+	 * FIXME the Observable doesn't respect unsubscription (and backpressure) and may loop forever. 
+	 */
 	public Observable<String> tailFile(File fileToTail, int n) {
 		return Observable
 				.create(subscriber -> {
@@ -68,6 +71,9 @@ public class TailExample implements Program {
 		return builder.toString();
 	}
 
+	/*
+	 * FIXME: this example doesn't print anything and never completes.
+	 */
 	@Override
 	public void run() {
 		File path = Paths.get("src", "main", "resources", "test.log").toFile();

@@ -22,6 +22,14 @@ public class CombineLatestFromImplementation implements Program {
 		return 8;
 	}
 
+	/*
+	 * FIXME: this operator has some problems:
+	 * - doesn't serialize access to 's'
+	 * - if o2 never emits a value, there won't be anything to combine ever, therefore one should unsubscribe both sources and emit onCompleted
+	 * - disregards downstream unsubscription and backpressure
+	 * 
+	 * Please have a look at the OperatorWithLatestFrom implementation.
+	 */
 	@SuppressWarnings("unchecked")
 	public <T, U, V> Observable<T> combineLatestFrom(Observable<U> o1,
 			Observable<V> o2, Func2<U, V, T> f) {

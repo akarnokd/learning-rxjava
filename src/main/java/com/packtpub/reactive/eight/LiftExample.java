@@ -98,6 +98,10 @@ public class LiftExample implements Program {
 
 		@Override
 		public Subscriber<? super T> call(Subscriber<? super Pair<Long, T>> s) {
+		    /*
+		     * FIXME the operator is disconnected from downstream 's' in terms of unsubscription and
+		     * backpressure.
+		     */
 			return new Subscriber<T>() {
 				@Override
 				public void onCompleted() {

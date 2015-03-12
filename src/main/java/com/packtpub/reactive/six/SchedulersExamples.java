@@ -23,6 +23,9 @@ public class SchedulersExamples implements Program {
 	public void run() {
 		Object monitor = new Object();
 
+		/*
+		 * FIXME I suggest using CountDownLatch instead.
+		 */
 		Action0 free = () -> {
 			synchronized (monitor) {
 				monitor.notify();
